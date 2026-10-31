@@ -7,8 +7,9 @@ import mongoose from "mongoose";
 import userRouter from "./ROUTES/userRouter.js";
 import jwt from "jsonwebtoken";
 import productRouter from "./ROUTES/productRouter.js";
+import dotenv from "dotenv";
 
-
+dotenv.config()
 const app = express(); 
 app.use (cors())
 

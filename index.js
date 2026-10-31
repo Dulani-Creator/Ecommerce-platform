@@ -1,13 +1,16 @@
 import "dotenv/config";
+import cors from "cors" ;
+
 
 import express from "express";
 import mongoose from "mongoose";
-import studentsRouter from "./ROUTES/studentsRouter.js";
 import userRouter from "./ROUTES/userRouter.js";
 import jwt from "jsonwebtoken";
 import productRouter from "./ROUTES/productRouter.js";
 
+
 const app = express(); 
+app.use (cors())
 
 // middleware to parse incoming JSON requests
 app.use(express.json());
@@ -44,7 +47,6 @@ mongoose.connect(process.env.MONGO_URI).then(
     }
 )
 
-app.use("/students", studentsRouter);
 app.use("/users", userRouter);
 app.use("/products",productRouter);
 

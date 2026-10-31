@@ -61,7 +61,14 @@ export async function loginUser(req, res) {
 
         return res.status(200).json({
             message: "Login successful",
-            token
+            token:token,
+            user: {
+                email:user.email,
+                firstName:user.firstName,
+                lastName: user.lastName,
+                role:user.role,
+                isEmailVerified :user.isEmailVerified
+            }
         });
     } catch (error) {
         console.error("Error logging in user:", error);

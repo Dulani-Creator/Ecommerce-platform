@@ -1,11 +1,13 @@
-import mangoose from "mongoose";
+import mongoose from "mongoose";
 
-const userSchema = new mangoose.Schema (
+const userSchema = new mongoose.Schema(
     {
         email: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            lowercase: true,
+            trim: true
         },
         firstName: {
             type: String,
@@ -16,31 +18,28 @@ const userSchema = new mangoose.Schema (
             required: true
         },
         password: {
-            type:String,
-            required:true
+            type: String,
+            required: true
         },
-        Role :{
+        Role: {
             type: String,
             required: true,
-            default: 'user'
+            default: "user"
         },
         isBlocked: {
             type: Boolean,
             default: false
         },
-        isEmailVerified : {
+        isEmailVerified: {
             type: Boolean,
             default: false
         },
         ProfileImage: {
             type: String,
-            default: 'https://share.google/KCANriyQCpI88iUk2'
+            default: "https://share.google/KCANriyQCpI88iUk2"
         }
-
-
-
     }
-)
+);
 
-const User = mangoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

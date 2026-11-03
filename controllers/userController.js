@@ -1,6 +1,9 @@
-import User from "../models/user.js";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+const jwtSecret = process.env.JWT_SECRET || "dev-secret-key";
+
 export async function createUser(req, res) {
     try {
         const { email, firstName, lastName, password, Role, isEmailVerified, ProfileImage } = req.body;
@@ -37,7 +40,7 @@ export async function loginUser(req, res) {
             return res.status(400).json({ message: "Email and password are required" });
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email.trim().toLowerCase() }).lean();
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -48,26 +51,28 @@ export async function loginUser(req, res) {
             return res.status(401).json({ message: "Invalid password" });
         }
 
+        const storedRole = user.role ?? user.Role;
+        const role = typeof storedRole === "string" ? storedRole.trim().toLowerCase() : "user";
         const token = jwt.sign(
             {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                role: user.Role || user.role,
-                isEmailVerified: user.isEmailVerified ?? user.isemailVerified
+                role,
+                isEmailVerified: user.isEmailVerified ?? false
             },
-            process.env.JWT_SECRET
+            jwtSecret
         );
 
         return res.status(200).json({
             message: "Login successful",
-            token:token,
+            token,
             user: {
-                email:user.email,
-                firstName:user.firstName,
+                email: user.email,
+                firstName: user.firstName,
                 lastName: user.lastName,
-                role:user.role,
-                isEmailVerified :user.isEmailVerified
+                role,
+                isEmailVerified: user.isEmailVerified ?? false
             }
         });
     } catch (error) {
@@ -76,27 +81,24 @@ export async function loginUser(req, res) {
     }
 }
 
-
-
-export function isAdmin(req){
-       if (req.user== null){
+export function isAdmin(req) {
+    if (req.user == null) {
         return false;
-       }
-       if (req.user.role !== "admin"){
+    }
+    if (req.user.role !== "admin") {
         return false;
-       }  
-       
-       return true;
+    }
+
+    return true;
 }
 
-
-export function isCustomer(req){
-    if(req.user == null){
+export function isCustomer(req) {
+    if (req.user == null) {
         return false;
     }
-    if(req.user.role !="user") {
-        return false ;
+    if (req.user.role !== "user") {
+        return false;
     }
 
-    return true ;
+    return true;
 }

@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost:5000/users/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\": \"manager@gmail.com\",\r
+
+    \  \"firstName\": \"Jason\",\r
+
+    \  \"lastName\": \"Miller\",\r
+
+    \  \"password\": \"123\",\r
+
+    \  \"Role\": \"admin\",\r
+
+    \  \"isBlocked\": false,\r
+
+    \  \"isEmailVerified\": true,\r
+
+    \  \"ProfileImage\": \"https://share.google/KCANriyQCpI88iUk2\"\r
+
+    }"
+order: 1000

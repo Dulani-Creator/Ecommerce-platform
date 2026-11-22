@@ -1,0 +1,33 @@
+$kind: http-request
+url: http://localhost:5000/products
+method: GET
+body:
+  type: json
+  content: "{\r
+
+    \  \"productId\": \"COS-SER-002\",\r
+
+    \  \"name\": \"Hydrating Hyaluronic Acid Serum\",\r
+
+    \  \"altName\": [\"Face Serum\", \"Moisturizing Serum\", \"Glow Serum\"],\r
+
+    \  \"description\": \"An intensive hydrating serum with pure hyaluronic acid and vitamin B5 to plump skin, lock in moisture, and restore a radiant glow.\",\r
+
+    \  \"images\": [\r
+
+    \    \"https://example.com/images/serum-front.jpg\"\r
+
+    \  ],\r
+
+    \  \"price\": 28.50,\r
+
+    \  \"labelPrice\": 35.00,\r
+
+    \  \"category\": \"Skincare\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1dyn}}"
+order: 4000

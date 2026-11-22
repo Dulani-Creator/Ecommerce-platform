@@ -1,0 +1,33 @@
+$kind: http-request
+url: http://localhost:5000/products
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"productId\": \"COS-EYE-003\",\r
+
+    \  \"name\": \"Volume Blast Waterproof Mascara\",\r
+
+    \  \"altName\": [\"Black Mascara\", \"Lengthening Mascara\"],\r
+
+    \  \"description\": \"A smudge-proof, volumizing mascara that delivers dramatic length and bold curl that lasts up to 24 hours without clumping.\",\r
+
+    \  \"images\": [\r
+
+    \    \"https://example.com/images/mascara-front.jpg\"\r
+
+    \  ],\r
+
+    \  \"price\": 15.00,\r
+
+    \  \"labelPrice\": 20.00,\r
+
+    \  \"category\": \"Eyes\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1dyn}}"
+order: 3000

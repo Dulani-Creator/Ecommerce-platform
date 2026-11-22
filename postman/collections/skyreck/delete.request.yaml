@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://localhost:5000/products
+method: DELETE
+body:
+  type: json
+  content: "{\r
+
+    \    \"productId\": \"COS-SER-002\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1dyn}}"
+order: 5000

@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost:5000/products/COS-EYE-003
+method: PUT
+body:
+  type: json
+  content: "{\r\n    \"price\": 30\r\n}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1dyn}}"
+order: 6000

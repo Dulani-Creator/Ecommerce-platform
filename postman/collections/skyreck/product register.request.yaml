@@ -1,0 +1,54 @@
+$kind: http-request
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_1dyn}}"
+order: 2000
+method: POST
+url: http://localhost:5000/products
+body:
+  type: json
+  content: "{\r
+
+    \  \"productId\": \"COS-NAL-005\",\r
+
+    \  \"name\": \"Gel Effect Nail Polish - Rose Nude\",\r
+
+    \  \"altName\": [\"Nail Enamel\", \"Glossy Nail Paint\"],\r
+
+    \  \"description\": \"A high-shine, long-wearing nail polish that gives a gel-like finish without needing a UV lamp, resistant to chipping.\",\r
+
+    \  \"images\": [\r
+
+    \    \"https://example.com/images/nailpolish-front.jpg\"\r
+
+    \  ],\r
+
+    \  \"price\": 9.99,\r
+
+    \  \"labelPrice\": 12.99,\r
+
+    \  \"category\": \"Nails\"\r
+
+    }\r\n"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 403 - Unauthorized", function () {
+          pm.response.to.have.status(403);
+      });
+
+      pm.test("Response body is valid JSON", function () {
+          pm.response.to.be.json;
+      });
+
+      pm.test("Response has a message property", function () {
+          const jsonData = pm.response.json();
+          pm.expect(jsonData).to.have.property("message");
+      });
+
+      pm.test("Message indicates not authorized", function () {
+          const jsonData = pm.response.json();
+          pm.expect(jsonData.message.toLowerCase()).to.include("not authorized");
+      });
+    language: text/javascript
